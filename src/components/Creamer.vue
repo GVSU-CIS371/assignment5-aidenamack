@@ -9,8 +9,8 @@ import { computed } from "vue";
 import { useBeverageStore } from "../stores/beverageStore";
 
 const beverageStore = useBeverageStore();
-const showCream = computed(() => beverageStore.selectedCreamer?.name !== "No Cream");
-const creamerColor = computed(() => beverageStore.selectedCreamer?.color ?? "transparent");
+const showCream = computed(() => beverageStore.currentCreamer?.name !== "No Cream");
+const creamerColor = computed(() => beverageStore.currentCreamer?.color ?? "transparent");
 </script>
 <style lang="scss" scoped>
 .froth {

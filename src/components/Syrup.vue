@@ -7,8 +7,8 @@ import { computed } from "vue";
 import { useBeverageStore } from "../stores/beverageStore";
 
 const beverageStore = useBeverageStore();
-const showSyrup = computed(() => beverageStore.selectedSyrup?.name !== "No Syrup");
-const syrupColor = computed(() => beverageStore.selectedSyrup?.color ?? "#c6c6c6");
+const showSyrup = computed(() => beverageStore.currentSyrup?.name !== "No Syrup");
+const syrupColor = computed(() => beverageStore.currentSyrup?.color ?? "#c6c6c6");
 </script>
 <style lang="scss" scoped>
 .syrup {

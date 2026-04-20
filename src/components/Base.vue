@@ -9,7 +9,7 @@ import { useBeverageStore } from "../stores/beverageStore";
 const beverageStore = useBeverageStore();
 
 const baseStyle = computed(() => {
-  const baseColor = beverageStore.selectedBase?.color ?? "#c6c6c6";
+  const baseColor = beverageStore.currentBase?.color ?? "#c6c6c6";
   return {
     backgroundColor: baseColor,
   };
