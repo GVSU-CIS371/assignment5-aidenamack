@@ -1,41 +1,48 @@
 import { defineStore } from "pinia";
-import {
-  BaseBeverageType,
-  CreamerType,
-  SyrupType,
-  BeverageType,
-} from "../types/beverage";
+import type { BeverageType } from "../types/beverage";
 import tempretures from "../data/tempretures.json";
-import db from "../firebase.ts";
-import {
-  collection,
-  getDocs,
-  setDoc,
-  doc,
-  QuerySnapshot,
-  QueryDocumentSnapshot,
-  onSnapshot,
-} from "firebase/firestore";
+import bases from "../data/bases.json";
+import creamers from "../data/creamers.json";
+import syrups from "../data/syrups.json";
 
 export const useBeverageStore = defineStore("BeverageStore", {
   state: () => ({
     temps: tempretures,
     currentTemp: tempretures[0],
-    bases: [] as BaseBeverageType[],
-    currentBase: null as BaseBeverageType | null,
-    syrups: [] as SyrupType[],
-    currentSyrup: null as SyrupType | null,
-    creamers: [] as CreamerType[],
-    currentCreamer: null as CreamerType | null,
-    beverages: [] as BeverageType[],
-    currentBeverage: null as BeverageType | null,
-    currentName: "",
+    bases: bases,
+    selectedBase: bases[0],
+    creamers: creamers,
+    selectedCreamer: creamers[0],
+    syrups: syrups,
+    selectedSyrup: syrups[0],
+    savedBeverages: [] as BeverageType[],
+    selectedSavedBeverageId: null as string | null,
   }),
 
   actions: {
-    init() {},
-    makeBeverage() {},
+    makeBeverage(name = "Saved Beverage") {
+      const beverage: BeverageType = {
+        id: `${Date.now()}`,
+        name,
+        temp: this.currentTemp,
+        base: this.selectedBase,
+        syrup: this.selectedSyrup,
+        creamer: this.selectedCreamer,
+      };
 
-    showBeverage() {},
+      this.savedBeverages.push(beverage);
+      this.selectedSavedBeverageId = beverage.id;
+      return beverage;
+    },
+
+    showBeverage(beverage: BeverageType) {
+      this.selectedSavedBeverageId = beverage.id;
+      this.currentTemp = beverage.temp;
+      this.selectedBase = beverage.base;
+      this.selectedSyrup = beverage.syrup;
+      this.selectedCreamer = beverage.creamer;
+      return beverage;
+    },
   },
+  persist: true,
 });
